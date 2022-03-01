@@ -9,13 +9,13 @@ const Tab = createBottomTabNavigator();
 
 
 const Home = () => {
-    return (
-        <Tab.Navigator>
-        <Tab.Screen name="Main" component={Main} />
-        <Tab.Screen name="Shop" component={Shop} />
-        <Tab.Screen name="Community" component={Community} />
-      </Tab.Navigator>
-    )
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Main" component={Main} />
+      <Tab.Screen name="Shop" component={Shop} />
+      <Tab.Screen name="Community" component={Community} />
+    </Tab.Navigator>
+  )
 }
 
 export default Home
