@@ -8,6 +8,8 @@ import Registration from './screens/Registration';
 import Home from './screens/Home';
 import { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import { mainColor } from './functions/style';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,10 +33,34 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
+          headerStyle: {
+            backgroundColor: mainColor,
+          },
+          headerTitle: '다니맘',
+          headerTintColor: '#fff', //Set Header text color
+          headerShadowVisible: false,
+          headerTitleStyle: {
+            fontSize: 30,
+            fontFamily: 'Gugi-Regular',
+            fontWeight: 'bold', //Set Header text style
+          },
+
+          headerBackTitleVisible: false,
+          headerRight: (props) => (
+            <View style={{ flexDirection: 'row' }}>
+              <Icon name='bell' size={20} color={"#fff"} style={{ marginRight: 15 }} onPress={() => { console.log('alarm!') }} />
+              <Icon name='sign-out-alt' size={20} color={"#fff"} onPress={() => { console.log('log out!') }} />
+            </View>
+          ),
+        }}
+      >
+        <Stack.Screen name='First' component={FirstPage}
+          options={{
+            headerShown: false
+          }} />
+        <Stack.Screen name='Login' component={LoginScreen} options={{
           headerShown: false
-        }}>
-        <Stack.Screen name='First' component={FirstPage} />
-        <Stack.Screen name='Login' component={LoginScreen} />
+        }} />
         <Stack.Screen name='Registration' component={Registration} />
         <Stack.Screen name='Home' component={Home} />
       </Stack.Navigator>
