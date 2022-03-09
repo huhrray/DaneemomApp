@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import DefaultText from '../components/DefaultText'
-import { screenHeight, screenWidth } from '../functions/style'
+import { mainColor } from '../functions/style'
 
 
 const FirstPage = ({ navigation }: any) => {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#5b473c',
+        backgroundColor: mainColor,
     },
     title: {
         fontSize: 100,
