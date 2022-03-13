@@ -10,9 +10,12 @@ import { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { mainColor } from './functions/style';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { rootReducer } from './store';
 
 const Stack = createNativeStackNavigator();
-
+const store = createStore(rootReducer)
 export default function App() {
   const [fontLoad, setFontLoad] = useState(false)
 
@@ -29,42 +32,43 @@ export default function App() {
   }, [])
 
   return (
-    fontLoad &&
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: mainColor,
-          },
-          headerTitle: '다니맘',
-          headerTintColor: '#fff', //Set Header text color
-          headerShadowVisible: false,
-          headerTitleStyle: {
-            fontSize: 30,
-            fontFamily: 'Gugi-Regular',
-            fontWeight: 'bold', //Set Header text style
-          },
+    fontLoad && <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: mainColor,
+            },
+            headerTitle: '다니맘',
+            headerTintColor: '#fff', //Set Header text color
+            headerShadowVisible: false,
+            headerTitleStyle: {
+              fontSize: 30,
+              fontFamily: 'Gugi-Regular',
+              fontWeight: 'bold', //Set Header text style
+            },
 
-          headerBackTitleVisible: false,
-          headerRight: (props) => (
-            <View style={{ flexDirection: 'row' }}>
-              <Icon name='bell' size={20} color={"#fff"} style={{ marginRight: 15 }} onPress={() => { console.log('alarm!') }} />
-              <Icon name='sign-out-alt' size={20} color={"#fff"} onPress={() => { console.log('log out!') }} />
-            </View>
-          ),
-        }}
-      >
-        <Stack.Screen name='First' component={FirstPage}
-          options={{
+            headerBackTitleVisible: false,
+            headerRight: (props) => (
+              <View style={{ flexDirection: 'row' }}>
+                <Icon name='bell' size={20} color={"#fff"} style={{ marginRight: 15 }} onPress={() => { console.log('alarm!') }} />
+                <Icon name='sign-out-alt' size={20} color={"#fff"} onPress={() => { console.log('log out!') }} />
+              </View>
+            ),
+          }}
+        >
+          <Stack.Screen name='First' component={FirstPage}
+            options={{
+              headerShown: false
+            }} />
+          <Stack.Screen name='Login' component={LoginScreen} options={{
             headerShown: false
           }} />
-        <Stack.Screen name='Login' component={LoginScreen} options={{
-          headerShown: false
-        }} />
-        <Stack.Screen name='Registration' component={Registration} />
-        <Stack.Screen name='Home' component={Home} />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen name='Registration' component={Registration} />
+          <Stack.Screen name='Home' component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

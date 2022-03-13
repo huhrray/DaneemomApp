@@ -2,13 +2,17 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { shopCategory } from '../DataSet'
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { mainColor, subFont, windowHeight, windowWidth } from '../functions/style'
+import { mainColor, subFont, windowHeight } from '../functions/style'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSnackCategory } from '../store/action'
+import { RootState } from '../store'
 
 const ShopHeader = ({ navigation }: any) => {
-    const [isSelected, setIsSelected] = useState('item1')
+    const { snackType } = useSelector((state: RootState) => state)
+    const dispatch = useDispatch()
     const renderItem = (item: any) => {
         return (
-            <TouchableOpacity style={styles.categoryTitleContainer} onPress={() => setIsSelected(item.key)}>
+            <TouchableOpacity style={[styles.categoryTitleContainer, item.key === snackType && styles.categoryIndicator]} onPress={() => dispatch(setSnackCategory(item.key))}>
                 <Text style={styles.categoryTitleText}>{item.title}</Text>
             </TouchableOpacity>
         )
@@ -22,9 +26,6 @@ const ShopHeader = ({ navigation }: any) => {
             horizontal={true}
             contentContainerStyle={styles.container}
             style={{ backgroundColor: mainColor }}
-            ItemSeparatorComponent={({ leadingItem }) => leadingItem.key === isSelected ? (
-                <View style={{ backgroundColor: "#fff", bottom: 0, height: 1, width: 120, position: 'absolute' }} />
-            ) : null}
             showsHorizontalScrollIndicator={false}
         />
     )
@@ -37,17 +38,23 @@ const styles = StyleSheet.create({
         backgroundColor: mainColor,
         height: windowHeight * 0.06,
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     categoryTitleContainer: {
         padding: 10,
         width: 120,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     categoryTitleText: {
         // resizeMode: 'contain',
         color: "#fff",
         fontFamily: subFont,
+    },
+    categoryIndicator: {
+        bottom: 0,
+        borderBottomColor: '#fff',
+        borderBottomWidth: 1,
+        width: 120,
     }
 
 })
